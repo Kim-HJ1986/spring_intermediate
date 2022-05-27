@@ -1,9 +1,9 @@
 package com.spring.springcore.controller;
 
-import com.spring.springcore.model.Product;
+import com.spring.springcore.repository.model.Product;
 import com.spring.springcore.dto.ProductMypriceRequestDto;
 import com.spring.springcore.dto.ProductRequestDto;
-import com.spring.springcore.model.UserRoleEnum;
+import com.spring.springcore.repository.model.UserRoleEnum;
 import com.spring.springcore.security.UserDetailsImpl;
 import com.spring.springcore.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,6 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLException;
 import java.util.List;
 
 //@RequiredArgsConstructor // final로 선언된 멤버 변수를 자동으로 생성합니다.
@@ -60,7 +59,9 @@ public class ProductController {
     // 관리자용 전체 상품 조회
     @Secured(UserRoleEnum.Authority.ADMIN) // "ROLE_ADMIN"
     @GetMapping("/api/admin/products")
-    public List<Product> getAllProducts(){
+    public List<Product> getAllProducts(@AuthenticationPrincipal UserDetailsImpl userDetails){
+        System.out.println(userDetails.getUser().getRole()); // ROLE NAME 리턴
+        System.out.println(userDetails.getAuthorities());// ROLE 전체 리스트 리턴
         return productService.getAllProducts();
     }
 }

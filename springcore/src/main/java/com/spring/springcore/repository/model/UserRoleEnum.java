@@ -1,4 +1,4 @@
-package com.spring.springcore.model;
+package com.spring.springcore.repository.model;
 
 public enum UserRoleEnum {
     USER(Authority.USER),  // 사용자 권한

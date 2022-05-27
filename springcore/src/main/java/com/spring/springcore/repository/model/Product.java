@@ -1,4 +1,4 @@
-package com.spring.springcore.model;
+package com.spring.springcore.repository.model;
 
 import com.spring.springcore.dto.ProductRequestDto;
 import lombok.Getter;

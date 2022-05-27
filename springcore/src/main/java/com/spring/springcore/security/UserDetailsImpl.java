@@ -1,14 +1,13 @@
 package com.spring.springcore.security;
 
-import com.spring.springcore.model.UserRoleEnum;
-import com.spring.springcore.model.Users;
+import com.spring.springcore.repository.model.UserRoleEnum;
+import com.spring.springcore.repository.model.Users;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 
 public class UserDetailsImpl implements UserDetails {
 
@@ -57,7 +56,7 @@ public class UserDetailsImpl implements UserDetails {
         UserRoleEnum role = user.getRole();
         String authority = role.getAuthority(); //"ROLE_USER" / "ROLE_ADMIN"
 
-        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(authority);
+        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(authority); //"ROLE_" 형식으로 줘야함
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(simpleGrantedAuthority);
 

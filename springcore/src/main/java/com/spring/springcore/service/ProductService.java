@@ -3,12 +3,11 @@ package com.spring.springcore.service;
 
 import com.spring.springcore.dto.ProductMypriceRequestDto;
 import com.spring.springcore.dto.ProductRequestDto;
-import com.spring.springcore.model.Product;
+import com.spring.springcore.repository.model.Product;
 import com.spring.springcore.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
