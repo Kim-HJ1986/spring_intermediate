@@ -1,6 +1,6 @@
 package com.spring.springcore.controller;
 
-import com.spring.springcore.repository.model.UserRoleEnum;
+import com.spring.springcore.model.UserRoleEnum;
 import com.spring.springcore.security.UserDetailsImpl;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;

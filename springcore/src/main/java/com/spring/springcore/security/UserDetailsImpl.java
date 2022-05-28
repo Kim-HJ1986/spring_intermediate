@@ -1,7 +1,7 @@
 package com.spring.springcore.security;
 
-import com.spring.springcore.repository.model.UserRoleEnum;
-import com.spring.springcore.repository.model.Users;
+import com.spring.springcore.model.UserRoleEnum;
+import com.spring.springcore.model.Users;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

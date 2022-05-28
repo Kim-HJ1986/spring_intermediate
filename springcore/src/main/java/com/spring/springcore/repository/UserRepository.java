@@ -1,6 +1,6 @@
 package com.spring.springcore.repository;
 
-import com.spring.springcore.repository.model.Users;
+import com.spring.springcore.model.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

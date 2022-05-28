@@ -1,9 +1,9 @@
 package com.spring.springcore.service;
 
 import com.spring.springcore.dto.SignupRequestDto;
+import com.spring.springcore.model.UserRoleEnum;
+import com.spring.springcore.model.Users;
 import com.spring.springcore.repository.UserRepository;
-import com.spring.springcore.repository.model.UserRoleEnum;
-import com.spring.springcore.repository.model.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

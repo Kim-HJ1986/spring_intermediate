@@ -1,9 +1,9 @@
 package com.spring.springcore.controller;
 
-import com.spring.springcore.repository.model.Product;
 import com.spring.springcore.dto.ProductMypriceRequestDto;
 import com.spring.springcore.dto.ProductRequestDto;
-import com.spring.springcore.repository.model.UserRoleEnum;
+import com.spring.springcore.model.Product;
+import com.spring.springcore.model.UserRoleEnum;
 import com.spring.springcore.security.UserDetailsImpl;
 import com.spring.springcore.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;

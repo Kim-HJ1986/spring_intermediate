@@ -1,7 +1,7 @@
 package com.spring.springcore.security;
 
 
-import com.spring.springcore.repository.model.Users;
+import com.spring.springcore.model.Users;
 import com.spring.springcore.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,4 +1,4 @@
-package com.spring.springcore.repository.model;
+package com.spring.springcore.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
