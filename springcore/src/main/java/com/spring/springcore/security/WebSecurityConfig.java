@@ -51,6 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 
         http.authorizeRequests()
+                //.antMatchers("/").permitAll()
                 // image 폴더를 login 없이 허용
                 .antMatchers("/images/**").permitAll()
                 // css 폴더를 login 없이 허용

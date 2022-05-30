@@ -54,7 +54,7 @@ public class KakaoUserService {
         // 2. 토큰으로 카카오 API 호출
         KakaoUserInfoDto kakaoUserInfo = getKakaoUserInfo(accessToken);
 
-        // 3. 필요시에 회원가입입
+        // 3. 필요시에 회원가입
        Users kakaoUser = registerKakaoUserIfNeeded(kakaoUserInfo);
 
         // 4. 강제 로그인 처리
@@ -170,6 +170,7 @@ public class KakaoUserService {
     }
 
     private void forceLoginUser(Users kakaoUser) {
+        // UserDetail 생성하고 UsernamePasswordAuthenticationToken 생성한 뒤, SecurityContextHolder에서 컨텍스트를 불러와 setAuthentication해준다.
         UserDetails userDetails = new UserDetailsImpl(kakaoUser);
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
