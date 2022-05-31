@@ -2,22 +2,32 @@ package com.spring.springcore.service;
 
 import com.spring.springcore.dto.ProductMypriceRequestDto;
 import com.spring.springcore.dto.ProductRequestDto;
+import com.spring.springcore.model.Folder;
 import com.spring.springcore.model.Product;
+import com.spring.springcore.model.Users;
+import com.spring.springcore.repository.FolderRepository;
 import com.spring.springcore.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final FolderRepository folderRepository;
     public static final int MIN_MY_PRICE = 100;
 
     @Autowired
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository, FolderRepository folderRepository) {
         this.productRepository = productRepository;
+        this.folderRepository = folderRepository;
     }
 
     public Product createProduct(ProductRequestDto requestDto, Long userId ) {
@@ -45,12 +55,38 @@ public class ProductService {
     }
 
     // 회원 ID 로 등록된 상품 조회
-    public List<Product> getProducts(Long userId) {
-        return productRepository.findAllByUserId(userId);
+    public Page<Product> getProducts(Long userId, int page, int size, String sortBy, boolean isAsc) {
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, sortBy);
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        return productRepository.findAllByUserId(userId, pageable);
     }
 
     // (관리자용) 상품 전체 조회
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    public Page<Product> getAllProducts(int page, int size, String sortBy, boolean isAsc) {
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, sortBy);
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        return productRepository.findAll(pageable);
+    }
+
+    // 관심상품에 폴더 추가
+    @Transactional
+    public Product addFolder(Long productId, Long folderId, Users user) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new NullPointerException("해당 상품 아이디가 존재하지 않습니다."));
+        Folder folder = folderRepository.findById(folderId)
+                .orElseThrow(() -> new NullPointerException("해당 폴더 아이디가 존재하지 않습니다."));
+
+        // 잘못된 요청은 에러핸들링 해줘야한다.(관심상품이나 폴더가 지닌 회원ID가 로그인한 유저의 ID와 다를 경우)
+        Long loginUserId = user.getId();
+        if(!product.getUserId().equals(loginUserId) || !folder.getUser().getId().equals(loginUserId)){
+            throw new IllegalStateException("회원님의 관심상품이 아니거나, 혹은 회원님의 폴더가 아닙니다.");
+        }
+
+        product.addFolder(folder);
+        return product;
     }
 }

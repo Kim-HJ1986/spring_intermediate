@@ -13,7 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
-@EnableWebSecurity // 스프링 Security 지원을 가능하게 함
+@EnableWebSecurity() // 스프링 Security 지원을 가능하게 함 파라미터에 debug = true 넣으면 콘솔창에서 적용되는 필터들을 볼 수 있다.
 @EnableGlobalMethodSecurity(securedEnabled = true) // @Secured 어노테이션 활성화
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -50,7 +50,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
 
-        http.authorizeRequests()
+        http
+            // 인가 API (요청에 대한 보안 검사 실행)
+            .authorizeRequests()
                 //.antMatchers("/").permitAll()
                 // image 폴더를 login 없이 허용
                 .antMatchers("/images/**").permitAll()
@@ -61,8 +63,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 그 외 어떤 요청이든 '인증'
                 .anyRequest().authenticated()
                 .and()
-                // [로그인 기능]
-                .formLogin()
+            // 인증 API [로그인 기능] (인증 API는 보통 인증 정책을 설정하는 구현부로 이루어짐)
+            .formLogin()
                 // 로그인 View 제공 (GET /user/login)
                 .loginPage("/user/login")
                 // 로그인 처리 (POST /user/login)
@@ -73,13 +75,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureUrl("/user/login?error")
                 .permitAll()
                 .and()
-                // [로그아웃 기능]
-                .logout()
+            // 인증 API [로그아웃 기능]
+            .logout()
                 // 로그아웃 요청 처리 URL
                 .logoutUrl("/user/logout")
                 .permitAll()
                 .and()
-                .exceptionHandling()
+            // 인증 API [예외 처리]
+            .exceptionHandling()
                 // "접근 불가" 페이지 URL 설정
                 .accessDeniedPage("/forbidden.html");
     }
