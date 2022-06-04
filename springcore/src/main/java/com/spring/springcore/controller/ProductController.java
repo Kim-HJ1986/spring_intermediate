@@ -2,9 +2,11 @@ package com.spring.springcore.controller;
 
 import com.spring.springcore.dto.ProductMypriceRequestDto;
 import com.spring.springcore.dto.ProductRequestDto;
+import com.spring.springcore.model.ApiUseTime;
 import com.spring.springcore.model.Product;
 import com.spring.springcore.model.UserRoleEnum;
 import com.spring.springcore.model.Users;
+import com.spring.springcore.repository.ApiUseTimeRepository;
 import com.spring.springcore.security.UserDetailsImpl;
 import com.spring.springcore.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +21,17 @@ import java.util.List;
 @RestController // JSON으로 데이터를 주고받음을 선언합니다.
 public class ProductController {
     private final ProductService productService;
+    private final ApiUseTimeRepository apiUseTimeRepository;
 
     //아래 @Autowired가 붙은 생성자의 역할은
     //클래스 위 @RequiredArgsConstructor에 의해 완벽히 대체된다. 따라서 같이 쓰면 오류남
     // productService라는 빈을 넣어줌 (DI: 의존성 주입)
     @Autowired
-    public ProductController(ProductService productService){
+    public ProductController(
+            ProductService productService,
+            ApiUseTimeRepository apiUseTimeRepository){
         this.productService = productService;
+        this.apiUseTimeRepository = apiUseTimeRepository;
     }
 
     // 신규 상품 등록
